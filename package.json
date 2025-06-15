@@ -1,0 +1,23 @@
+{
+  "name": "open-mirror",
+  "version": "1.0.0",
+  "description": "Simple browser-based proxy API with screenshot, headers, and PDF support using Playwright.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": ["proxy", "screenshot", "headers", "pdf", "playwright", "api", "browser"],
+  "author": "Nazedev",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.19.0",
+    "morgan": "^1.10.0",
+    "playwright": "^1.44.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
