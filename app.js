@@ -54,9 +54,7 @@ app.get('/proxy', async (req, res) => {
 	if (!url) return res.status(400).send('Missing ?url=');
 	try {
 		const head = await axios.head(url);
-		const contentType = await page.evaluate(() => {
-			return document.contentType || head.headers['content-type'] || '';
-		});
+		const contentType = head.headers['content-type'] || '';
 		
 		if (!contentType.includes('text/html')) {
 			const browserHeaders = await getBrowserHeaders(url);
