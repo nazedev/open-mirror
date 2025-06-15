@@ -42,7 +42,7 @@ npx playwright install --with-deps
 
 ### 3. Run
 ```bash
-node index.js
+node app.js
 ```
 
 #### Support Me
