@@ -12,6 +12,7 @@ let browser;
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('json spaces', 4);
 app.use(morgan('dev'));
 
 async function getBrowser() {
