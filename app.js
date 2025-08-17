@@ -122,7 +122,7 @@ app.get('/proxy', async (req, res) => {
 	} catch (e) {
 		res.status(500).send(e.message);
 	} finally {
-		await context.close();
+		if (context) await context.close();
 	}
 });
 
@@ -263,3 +263,4 @@ const cleanup = async () => {
 
 process.on('SIGINT', cleanup)
 process.on('SIGTERM', cleanup)
+
