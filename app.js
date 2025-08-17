@@ -61,6 +61,7 @@ app.get('/proxy', async (req, res) => {
 	if (!url) return res.status(400).send('Missing ?url=');
 	const u = new URL(url);
 	if (['localhost', '127.0.0.1'].includes(u.hostname)) return res.status(403).send('Forbidden');
+	let context;
 	try {
 		const head = await axios.head(url, { httpsAgent: agent });
 		const contentType = head.headers['content-type'] || '';
@@ -93,7 +94,8 @@ app.get('/proxy', async (req, res) => {
 				response.data.pipe(res);
 			}
 		} else {
-			const { page, context } = await openPage(url);
+			const { page, context: ctx } = await openPage(url);
+			context = ctx;
 			await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 10000 });
 			const html = await page.content();
 			if (get) {
@@ -173,9 +175,9 @@ app.get('/headers', async (req, res) => {
 		const browser = await getBrowser();
 		const context = await browser.newContext();
 		const page = await context.newPage();
-		page.on('response', async (res) => {
-			if (res.url() === url) {
-				data = res.headers();
+		page.on('response', async (response) => {
+			if (response.url() === url) {
+				data = response.headers();
 			}
 		});
 		await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 10000 });
@@ -261,4 +263,3 @@ const cleanup = async () => {
 
 process.on('SIGINT', cleanup)
 process.on('SIGTERM', cleanup)
-process.on('exit', cleanup)
